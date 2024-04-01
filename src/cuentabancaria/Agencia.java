@@ -22,13 +22,15 @@ public class Agencia {
 
     private String gerente;
 
-    public Agencia(String nomAgencia) {
+    public Agencia(String nomAgencia, String direccion, int categoria, int aforo, String gerente) {
         this.nomAgencia = nomAgencia;
         this.direccion = direccion;
         this.categoria = categoria;
         this.aforo = aforo;
         this.gerente = gerente;
     }
+
+    
 
     public Agencia() {
 
@@ -77,12 +79,12 @@ public class Agencia {
         int categoriaAgencia = scanner.nextInt();
         System.out.print("- Aforo (Número): ");
         int aforoAgencia = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea pendiente
+        scanner.nextLine(); // C3onsumir el salto de línea pendiente
         System.out.print("- Gerente: ");
         String gerenteAgencia = scanner.nextLine();
 
         //Crear Instancia de Agencia con los datos proporcionados
-        Agencia agencia = new Agencia(nombreAgencia);
+        Agencia agencia = new Agencia(nombreAgencia,direccionAgencia,categoriaAgencia,aforoAgencia,gerenteAgencia);
 
         //Mostrar datos de la Agencia
         System.out.println("-------------------------------");

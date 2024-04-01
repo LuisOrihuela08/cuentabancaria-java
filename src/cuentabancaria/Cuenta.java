@@ -5,6 +5,7 @@
 package cuentabancaria;
 
 import static cuentabancaria.CuentaBancaria.inicio;
+import cuentabancaria.Agencia;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -62,19 +63,19 @@ public class Cuenta {
         System.out.println("Cuenta abierta correctamente.");
     }
 
-   public void Abonar(double monto) {
-    this.saldo += monto;
-    System.out.println("Abono exitoso. Nuevo saldo: " + this.saldo);
-}
-
-public void Retirar(double monto) {
-    if (monto <= this.saldo) {
-        this.saldo -= monto;
-        System.out.println("Retiro exitoso. Nuevo saldo: " + this.saldo);
-    } else {
-        System.out.println("Saldo insuficiente.");
+    public void Abonar(double monto) {
+        this.saldo += monto;
+        System.out.println("Abono exitoso. Nuevo saldo: " + this.saldo);
     }
-}
+
+    public void Retirar(double monto) {
+        if (monto <= this.saldo) {
+            this.saldo -= monto;
+            System.out.println("Retiro exitoso. Nuevo saldo: " + this.saldo);
+        } else {
+            System.out.println("Saldo insuficiente.");
+        }
+    }
 
     public void VerSaldo() {
         System.out.println("Saldo actual: " + saldo);
@@ -86,29 +87,40 @@ public void Retirar(double monto) {
         //Solicitar datos de la Cuenta
         System.out.println("\n");
         System.out.println("Ingrese los datos de la Cuenta");
-        System.out.print("Número de cuenta: ");
+        System.out.print("- Número de cuenta: ");
         int numCuenta = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea pendiente
-        System.out.print("Código completo de cuenta: ");
+        System.out.print("- Código completo de cuenta: ");
         String codigoCuenta = scanner.nextLine();
-        System.out.print("Propietario: ");
+        System.out.print("- Propietario: ");
         String propietarioCuenta = scanner.nextLine();
-        System.out.print("Tipo de cliente (Número): ");
+        System.out.print("- Tipo de cliente (Número): ");
         int tipoCliente = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea pendiente
         // Solicitar datos de la agencia y crear una lista con ellos
         List<Agencia> agencias = new ArrayList<>();
         System.out.println("Ingrese los datos de la agencia (ingrese 'fin' para terminar): ");
         while (true) {
-            System.out.print("Agencia: ");
+            System.out.print("- Agencia: ");
             String nomAgencia = scanner.nextLine();
             if (nomAgencia.equals("fin")) {
                 break;
             }
-            Agencia agencia = new Agencia(nomAgencia); // Suponiendo que Agencia tiene un constructor que recibe el nombre
+            System.out.print("- Dirección: ");
+            String direccion = scanner.nextLine();
+            System.out.print("- Categoria: ");
+            int categoria = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea pendiente
+            System.out.print("- Aforo: ");
+            int aforo = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea pendiente
+            System.out.print("- Gerente: ");
+            String gerente = scanner.nextLine();
+
+            Agencia agencia = new Agencia(nomAgencia, direccion, categoria, aforo, gerente);
             agencias.add(agencia);
         }
-        System.out.print("Saldo: ");
+        System.out.print("- Saldo: ");
         double saldoCuenta = scanner.nextDouble();
 
         //Crear Instancia de la Cuenta con los datos proporcionados
@@ -127,17 +139,22 @@ public void Retirar(double monto) {
         System.out.println("- Propietario: " + Propietario);
         System.out.println("- Tipo de Cliente: " + tipoCliente);
         if (agencia != null && !agencia.isEmpty()) {
-        for (int i = 0; i < agencia.size(); i++) {
-            Agencia agenciaActual = agencia.get(i);
-            System.out.print("- Agencia: " + agenciaActual.getNomAgencia());
-            if (i < agencia.size() - 1) {
-                System.out.print(", ");
+            for (int i = 0; i < agencia.size(); i++) {
+                Agencia agenciaActual = agencia.get(i);
+                System.out.println("Datos de la Agencia:");
+                System.out.println("- Agencia: " + agenciaActual.getNomAgencia());
+                System.out.println("- Dirección:" + agenciaActual.getDireccion());
+                System.out.println("- Categoria: " + agenciaActual.getCategoria());
+                System.out.println("- Aforo: " + agenciaActual.getAforo());
+                System.out.println("- Gerente: " + agenciaActual.getGerente());
+                if (i < agencia.size() - 1) {
+                    System.out.print(", ");
+                }
             }
+        } else {
+            System.out.print("N/A");
         }
-    } else {
-        System.out.print("N/A");
-    }
-    System.out.println();
+        System.out.println();
         System.out.println("- Saldo de Cuenta: " + saldo);
 
     }
